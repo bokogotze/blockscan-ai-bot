@@ -1,20 +1,12 @@
 services:
-  - type: web
-    name: blockscan-backend
+  - type: worker
+    name: blockscan-ai-bot
     env: python
     region: frankfurt
     plan: free
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "gunicorn server:app"
-    autoDeploy: true
+    buildCommand: pip install -r requirements.txt
+    startCommand: python3 bot.py
     envVars:
-      - key: TELEGRAM_BOT_TOKEN
-        generateValue: false
-      - key: MONGO_URI
-        generateValue: false
-      - key: NOWPAYMENTS_API_KEY
-        generateValue: false
-      - key: NOWPAYMENTS_IPN_SECRET
-        generateValue: false
-      - key: OPENROUTER_API_KEY
-        generateValue: false
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
+      MONGO_URI: ${MONGO_URI}
+      CLUSTER_NAME: ${CLUSTER_NAME}
